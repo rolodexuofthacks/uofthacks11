@@ -1,6 +1,7 @@
 import speech_recognition as speechrec
 import cohere
 import os
+from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -10,9 +11,11 @@ load_dotenv()
 keywords = ['hello james', 'james']
 rec = speechrec.Recognizer()
 mic = speechrec.Microphone()
+client = OpenAI(api_key=str(os.getenv('GPT_API_KEY')))
 
 
 
+# functions
 def isRecording():
 
     if not isinstance(rec, speechrec.Recognizer):
@@ -72,7 +75,7 @@ def summarizeText(totalText):
 
         modText = ' '.join(modTextArr)
 
-        co = cohere.Client(str(os.getenv('API_KEY'))) # This is your trial API key
+        co = cohere.Client(str(os.getenv('COHERE_API_KEY'))) # This is your trial API key
         response = co.summarize( 
             text= modText,
             length='short',
@@ -87,7 +90,141 @@ def summarizeText(totalText):
     else:
         pass
 
+
+
+def getFirstName(totalText):
+    textArr = totalText.split()
+
+    if len(textArr) > 6:
+        modTextArr = textArr[2:-1]
+
+        modText = ' '.join(modTextArr)
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": f'''get the first name of the person from this text, 
+                    return only the first name with no other text. \n{modText}\n'''
+                },
+                {
+                    "role": "user",
+                    "content": ""
+                }
+            ],
+            temperature=1,
+            max_tokens=256,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
+            )
+        print(str(response.choices[0].message.content))
+        return str(response.choices[0].message.content)
+    else:
+        pass
     
+    
+
+def getDate(totalText):
+    textArr = totalText.split()
+
+    if len(textArr) > 6:
+        modTextArr = textArr[2:-1]
+
+        modText = ' '.join(modTextArr)
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": f'''get the date of the event from this text, 
+                    return only the date with no other text formatted like 12th October 2022. 
+                    \n{modText}\n'''
+                },
+                {
+                    "role": "user",
+                    "content": ""
+                }
+            ],
+            temperature=1,
+            max_tokens=256,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
+            )
+        print(str(response.choices[0].message.content))
+        return str(response.choices[0].message.content)
+    else:
+        pass
+
+
+
+def getEventName(totalText):
+    textArr = totalText.split()
+
+    if len(textArr) > 6:
+        modTextArr = textArr[2:-1]
+
+        modText = ' '.join(modTextArr)
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": f'''get the name of the event from this text,
+                    return only the name with no other text. \n{modText}\n'''
+                },
+                {
+                    "role": "user",
+                    "content": ""
+                }
+            ],
+            temperature=1,
+            max_tokens=256,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
+            )
+        print(str(response.choices[0].message.content))
+        return str(response.choices[0].message.content)
+    else:
+        pass
+
+
+
+def getEventLocation(totalText):
+    textArr = totalText.split()
+
+    if len(textArr) > 6:
+        modTextArr = textArr[2:-1]
+
+        modText = ' '.join(modTextArr)
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": f'''get the city/town, state/province, country of the event from this text, 
+                    return only the city/town, state/province, country with no other text . If no city/town 
+                    is specified, return the province/state and country only. \n{modText}\n'''
+                },
+                {
+                    "role": "user",
+                    "content": ""
+                }
+            ],
+            temperature=1,
+            max_tokens=256,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
+            )
+        print(str(response.choices[0].message.content))
+        return str(response.choices[0].message.content)
+    else:
+        pass
+    
+
 
 def mainFunc():
     endRec = True
@@ -97,12 +234,22 @@ def mainFunc():
         text = speechToText(audio)
         currStr += text + ' '
         endRec = startEndConversion(text)
-    print(currStr)
+    #print(currStr)
+    summarizeText(currStr)
+    getFirstName(currStr)
+    getDate(currStr)
+    getEventName(currStr)
+    getEventLocation(currStr)
 
 
 
 if __name__ == "__main__":
     mainFunc()
+
+
+
+
+
 
 
 
