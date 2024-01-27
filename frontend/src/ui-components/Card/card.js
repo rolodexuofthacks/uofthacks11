@@ -28,7 +28,7 @@ const slides = [
     content: (
       <img
         style={{ width: "100%", height: "auto" }}
-        src="https://f.hubspotusercontent00.net/hubfs/8852505/3.png"
+        src="https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dg"
         alt="card"
       />
     ),
@@ -95,7 +95,7 @@ const slides = [
   },
 ];
 
-export default class Example extends Component {
+export default class Card extends Component {
   state = {
     goToSlide: 0,
     offsetRadius: 4,
