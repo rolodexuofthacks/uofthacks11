@@ -1,8 +1,7 @@
 .App {
-  text-align: center;
+  background-color: #fff8b0;
   height: 100vh;
 }
-/* 
 
 .webcam-container {
   display: flex;
@@ -49,4 +48,4 @@
 .btn-3 {
   background-color: #efa1a1;
   /* background: linear-gradient(141deg, #4CA7CB 13.28%, rgba(223, 141, 165, 0.90) 90.75%); */
-/* }  */
+}

@@ -1,14 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./ui-components/home";
-import Card from "./ui-components/Card/card";
-import Timeline from "./timeline/timeline";
-import Record from "./ui-components/Record/record"
-import "./App.css";
+import "./record.css";
 import React, { useState, useEffect, useRef } from "react";
+import Webcam from "react-webcam";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-function App() {
+function Record() {
   //example to fetch
   const [text, setText] = useState("");
 
@@ -105,17 +101,34 @@ function App() {
   };
 
   return (
-    <div className="App min-h-screen w-full  ">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/rolodex" element={<Card />} />
-          <Route path="/record" element={<Record />} />
-          <Route path="/storyline" element={<Timeline />} />
-        </Routes>
-      </Router>
+    <div className="record">
+      <div className="webcam-container">
+        <Webcam
+          audio={false}
+          height={720}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          width={1280}
+          videoConstraints={videoConstraints}
+          className="webcam"
+        />
+      </div>
+
+      <div className="btn-container">
+        <button className="webcam-btn btn-1" onClick={capture}>
+          Capture photo
+        </button>
+        <button className="webcam-btn btn-2" onClick={startListening}>
+          Start
+        </button>
+        <button className="webcam-btn btn-3" onClick={stopListeningAndSendData}>
+          Stop
+        </button>
+      </div>
+      <p>{transcript}</p>
+      {/* {/* <div>{imgSrc && <img src={imgSrc} />}</div> */}
     </div>
   );
 }
 
-export default App;
+export default Record;
