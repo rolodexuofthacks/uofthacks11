@@ -1,0 +1,84 @@
+/* .main{
+    position: fixed;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    
+} */
+
+.main{
+    background: linear-gradient(141deg, #4CA7CB 13.28%, rgba(223, 141, 165, 0.90) 90.75%);
+}
+.personCard{
+    /* border-radius: 10px; */
+    /* background: #8C7580; */
+    /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
+    display: inline-flex;
+    justify-content: space-around;
+    
+}
+
+.personCard img{
+    width:40%; 
+    /* background-color: #E2C49C; */
+}
+
+/* .btn{
+    padding:10px 30px 10px 30px; 
+    margin-top: 10px;
+    font-size: 20px;
+} */
+
+.description{
+    margin-top: 80px;
+    margin-right: 0px;
+    padding-right: 50px;
+    font-weight: 800;
+    color:#DF8DA5; 
+}
+
+.description h2{
+    font-size: 30px;
+}
+
+/* .rolodexright{
+    position: absolute;
+    width:20%;
+    height: 50%;
+    left:930px;
+}
+
+.rolodexleft{
+    position: absolute;
+    width:20%;
+    height: 50%;
+    left:80px;
+}
+ */
+
+
+.searchBar{
+    height:50px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.searchbtn{
+    background-color: #fff;
+    border-radius:10px; 
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    box-shadow: 0 9px #999;
+}
+
+.searchbtn:hover {background-color: #47A3BB}
+
+.searchbtn:active {
+  background-color: #47A3BB;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

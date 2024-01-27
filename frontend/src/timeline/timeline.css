@@ -1,0 +1,23 @@
+
+/* Timeline Container */
+.timeline {
+  background: linear-gradient(159deg, #47A3BB 12.28%, #FFF57E 91.27%);
+}
+
+.custom-date{
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.title{
+  font-weight:bold; 
+}
+
+.infoCard{
+  background-color: #fff;
+}
+
+.container{
+  height: 100vh;
+}

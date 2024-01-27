@@ -1,10 +1,6 @@
-import logo from "./logo.svg";
-import "./App.css";
-import React, { useState, useEffect, useRef } from "react";
-import Webcam from "react-webcam";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import logo from './logo.svg';
+import './App.css';
+
 function App() {
   //example to fetch
   const [text, setText] = useState("");
@@ -103,31 +99,20 @@ function App() {
 
   return (
     <div className="App">
-      <div className="webcam-container">
-        <Webcam
-          audio={false}
-          height={720}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          width={1280}
-          videoConstraints={videoConstraints}
-          className="webcam"
-        />
-      </div>
-
-      <div className="btn-container">
-        <button className="webcam-btn btn-1" onClick={capture}>
-          Capture photo
-        </button>
-        <button className="webcam-btn btn-2" onClick={startListening}>
-          Start
-        </button>
-        <button className="webcam-btn btn-3" onClick={stopListeningAndSendData}>
-          Stop
-        </button>
-      </div>
-      <p>{transcript}</p>
-      {/* {/* <div>{imgSrc && <img src={imgSrc} />}</div> */}
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
     </div>
   );
 }
