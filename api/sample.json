@@ -1,0 +1,28 @@
+[   {
+        "query": "2002"
+    },
+    {
+        "events":
+        [
+            {
+                "name":"Olivia", 
+                "year":"2003",
+                "event":"Artistry Expo", 
+                "summary": "Olivia attended an art event on October 8th, 2022, at the Metropolitan Gallery called Artistry Expo starting at 2:00 PM. It was an exhibition where artists and art enthusiasts gathered to discuss contemporary art and explore various artistic expressions. She recommends it to others and hopes to meet others interested in art there next time."
+            },
+            {
+                "name":"David",
+                "year":"2005",
+                "event":"FlavorFest",
+                "summary":"David attended FlavorFest, a cooking and food festival at the Culinary Arts Center on May 20, 2023. It was a festival for chefs and food enthusiasts covering gastronomy trends and offering opportunities to taste unique dishes."
+            },
+            {
+                "name":"Emily",
+                "year":"2010",
+                "event":"HealthTech Forum",
+                "summary":"Emily attended the HealthTech Forum on March 12, 2023, a healthcare technology summit at the Wellness Center, starting at 10:30 AM. She recommends it to others interested in healthcare innovations as it showcased new medical technology and had a telemedicine panel. Emily found it a great opportunity for networking."
+            }
+
+        ]
+    }
+]
