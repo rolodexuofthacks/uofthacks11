@@ -1,28 +1,31 @@
 import speech_recognition as speechrec
 import cohere
 import os
+from flask import Flask, request
 from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
-
+app = Flask(__name__)
 
 # global variables 
 keywords = ['hello james', 'james']
+getAudio = request.files['insert frontend mic name']
 rec = speechrec.Recognizer()
-mic = speechrec.Microphone()
+mic = speechrec.AudioFile(getAudio)
 client = OpenAI(api_key=str(os.getenv('GPT_API_KEY')))
 
 
 
 # functions
+@app.route('/recording', methods=['GET'])
 def isRecording():
 
     if not isinstance(rec, speechrec.Recognizer):
-        print('TypeError: recognizer mist be of instance speechrec.Recognizer()')
+        print('TypeError: rec mist be of instance speechrec.Recognizer()')
     
-    if not isinstance(mic, speechrec.Microphone):
-        print('TypeError: audioInput must be of instance speechrec.Microphone()')
+    if not isinstance(mic, speechrec.AudioFile):
+        print('TypeError: mic must be of instance speechrec.AudioFile()')
 
     with mic as source:
         rec.adjust_for_ambient_noise(source)
@@ -123,7 +126,7 @@ def getFirstName(totalText):
     else:
         pass
     
-    
+
 
 def getDate(totalText):
     textArr = totalText.split()
