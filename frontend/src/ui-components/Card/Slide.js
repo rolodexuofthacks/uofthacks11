@@ -15,15 +15,15 @@ const SlideContainer = styled.div`
 
 const SlideCard = styled.div`
   position: relative;
-  width: 700px;
+  width: 600px;
   height: 300px;
-  background: white;
+   background: white;
   // font-size: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
   transform-origin: 50% 50%;
-  // border-radius: 8px;
+  border-radius: 8px;
 `;
 
 function Slide({

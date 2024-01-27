@@ -10,8 +10,8 @@ const slides = [
     key: 0,
     content: (
       <CardContent 
-        name="1Jane John"
-        image="./avatar/avatar2.png"
+        name="John Micheal"
+        image="./avatar/avatar1.png"
     />
 
     ),
@@ -20,7 +20,7 @@ const slides = [
     key: 1,
     content: (
       <CardContent 
-        name="2Jane John"
+        name="Jane John"
         image="./avatar/avatar2.png"
     />
     ),
@@ -29,7 +29,7 @@ const slides = [
     key: 2,
     content: (
       <CardContent 
-        name="3Jane John"
+        name="Jun Ye"
         image="./avatar/avatar3.png"
     />
     ),
@@ -38,7 +38,7 @@ const slides = [
     key: 3,
     content: (
       <CardContent 
-      name="4Jane John"
+      name="Jane John"
       image="./avatar/avatar4.png"
   />
     ),
@@ -47,7 +47,7 @@ const slides = [
     key: 4,
     content: (
       <CardContent 
-        name="5Jane John"
+        name="Jane John"
         image="./avatar/avatar5.png"
     />
     ),
@@ -56,7 +56,7 @@ const slides = [
     key: 5,
     content: (
       <CardContent 
-        name="6Jane John"
+        name="Jane John"
         image="./avatar/avatar6.png"
     />
     ),
@@ -65,8 +65,8 @@ const slides = [
     key: 6,
     content: (
       <CardContent 
-        name="7Jane John"
-        image="./avatar/avatar6.png"
+        name="Jane John"
+        image="./avatar/avatar7.png"
     />
     ),
   },
@@ -74,8 +74,8 @@ const slides = [
     key: 7,
     content: (
       <CardContent 
-        name="8Jane John"
-        image="./avatar/avatar6.png"
+        name="Jane John"
+        image="./avatar/avatar8.png"
     />
     ),
   },
@@ -83,8 +83,8 @@ const slides = [
     key: 8,
     content: (
       <CardContent 
-        name="9Jane John"
-        image="./avatar/avatar6.png"
+        name="Jane John"
+        image="./avatar/avatar9.png"
     />
     ),
   },
@@ -110,7 +110,7 @@ export default class Card extends Component {
        
       
       </div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  z-10">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
         <VerticalCarousel
           slides={slides}
           offsetRadius={this.state.offsetRadius}

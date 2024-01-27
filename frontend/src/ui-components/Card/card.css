@@ -8,32 +8,32 @@
     margin: 0 auto;
     
 } */
-.card{
-
-    border-radius: 10px;
-    background: linear-gradient(180deg, #E283C1 0%, rgba(94, 120, 213, 0.73) 99.99%, rgba(217, 217, 217, 0.00) 100%);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+.personCard{
+    /* border-radius: 10px; */
+    /* background: #8C7580; */
+    /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
     display: inline-flex;
     justify-content: space-around;
     
 }
 
-.card img{
+.personCard img{
     width:40%; 
+    /* background-color: #E2C49C; */
 }
 
-.btn{
-    background-color: #fff;
-    border-radius: 10px;
+/* .btn{
     padding:10px 30px 10px 30px; 
     margin-top: 10px;
     font-size: 20px;
-}
+} */
 
 .description{
-    margin-top: 100px;
+    margin-top: 80px;
     margin-right: 0px;
-    padding-right: 100px;
+    padding-right: 50px;
+    font-weight: 800;
+    color:#DF8DA5; 
 }
 
 .description h2{

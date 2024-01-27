@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Card from "./ui-components/Card/card";
 import Timeline from "./timeline/timeline";
+import './App.css'
 
 function App() {
   return (

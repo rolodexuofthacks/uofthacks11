@@ -10,12 +10,12 @@ const CardContent = ({ name, image }) => {
   }
 
   return (
-    <div className="card">
+    <div className="personCard">
       <img src={image} alt={name} />
-      <div className="description">
+      <div className="description font-mono">
         <h2>{name}</h2>
-        <button onClick={handleClick} className="btn">
-          View Storyline
+        <button onClick={handleClick} className="border rounded-md border-slate-600 hover:border-indigo-600">
+          <p className="m-3">View Storyline</p>
         </button>
       </div>
     </div>
