@@ -5,9 +5,6 @@ import Timeline from "./timeline/timeline";
 function App() {
   return (
     <div className="App">
-      <Card />
-      {/* move timeline to wherever required */}
-      <Timeline /> 
       <Router>
         <Routes>
           <Route path="/" element={<Card />} />
