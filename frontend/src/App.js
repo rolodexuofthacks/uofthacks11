@@ -2,29 +2,79 @@ import logo from "./logo.svg";
 import "./App.css";
 import React, { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
-
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 function App() {
   //example to fetch
   const [text, setText] = useState("");
 
-  // State to handle loading status
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
 
-  // State to handle any errors
-  const [error, setError] = useState(null);
+  // if (!browserSupportsSpeechRecognition) {
+  //   return <span>Browser doesn't support speech recognition.</span>;
+  // }
 
+  // Start listening
+  const startListening = () =>
+    SpeechRecognition.startListening({ continuous: true });
+
+  // Stop listening and send data to backend
+  const stopListeningAndSendData = () => {
+    SpeechRecognition.stopListening();
+    sendDataToBackend(transcript);
+    resetTranscript();
+  };
+
+  // Check transcript for keywords
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/api/hello")
-      .then((res) => res.json())
-      .then((data) => {
-        setText(data);
+    if (transcript.includes("tim start")) {
+      // Perform actions when your start keyword is detected
+
+      resetTranscript();
+      capture();
+    }
+
+    if (transcript.includes("tim stop") && listening) {
+      // Perform actions when your stop keyword is detected
+      SpeechRecognition.stopListening();
+      sendDataToBackend(transcript);
+    }
+  }, [transcript, listening]); // Dependencies ensure this effect runs when transcript or listening state changes
+
+  // Function to send data to backend
+  const sendDataToBackend = async (data) => {
+    try {
+      await fetch("http://127.0.0.1:5000/api/user_test/voice_recording", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data }),
       });
-  }, []);
+    } catch (error) {
+      console.error("Error sending data to backend:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetch("http://127.0.0.1:5000/api/hello")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setText(data);
+  //     });
+  // }, []);
 
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
 
   const capture = React.useCallback(() => {
+    console.log("taking image");
     const imageSrc = webcamRef.current.getScreenshot();
     uploadImage(imageSrc);
     setImgSrc(imageSrc);
@@ -36,19 +86,19 @@ function App() {
     facingMode: "user",
   };
 
-  const uploadImage = (testimg) => {
+  const uploadImage = async (testimg) => {
     console.log(testimg);
-    fetch("http://127.0.0.1:5000/api/addy/image", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({ image: testimg }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+    try {
+      await fetch("http://127.0.0.1:5000/api/user_test/image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ image: testimg }),
+      });
+    } catch (error) {
+      console.error("Error sending image to backend:", error);
+    }
   };
 
   return (
@@ -62,6 +112,9 @@ function App() {
         videoConstraints={videoConstraints}
       />
       <button onClick={capture}>Capture photo</button>
+      <button onClick={startListening}>Start</button>
+      <button onClick={stopListeningAndSendData}>Stop</button>
+      <p>{transcript}</p>
       {/* {/* <div>{imgSrc && <img src={imgSrc} />}</div> */}
     </div>
   );
