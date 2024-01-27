@@ -1,9 +1,16 @@
 import speech_recognition as speechrec
+import cohere
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
 
 # global variables 
-keywords = ['hello app name', 'goodbye app name']
+keywords = ['hello james', 'james']
 rec = speechrec.Recognizer()
 mic = speechrec.Microphone()
+
 
 
 def isRecording():
@@ -21,6 +28,7 @@ def isRecording():
     return audio_data
 
 
+
 def speechToText(audioInput):
 
     transcriptObj = {
@@ -30,7 +38,7 @@ def speechToText(audioInput):
     }
 
     try:
-        transcriptObj['text'] = rec.recognize_google(audioInput, language='en-CA')
+        transcriptObj['text'] = rec.recognize_google(audioInput)
         #print(transcriptObj['text']) # checking output
     except speechrec.RequestError:
         transcriptObj['requestErr'] = True
@@ -39,6 +47,7 @@ def speechToText(audioInput):
     
     return transcriptObj['text']
     
+
 
 def startEndConversion(text):
    
@@ -53,24 +62,34 @@ def startEndConversion(text):
     return True
 
 
+
 def summarizeText(totalText):
     #cohere summarization model
     textArr = totalText.split()
     
     if len(textArr) > 6:
-        modTextArr = textArr[3:-3]
+        modTextArr = textArr[2:-1]
 
         modText = ' '.join(modTextArr)
 
-        #cohere stuff goes here, send to firebase.
-        return modText
+        co = cohere.Client(str(os.getenv('API_KEY'))) # This is your trial API key
+        response = co.summarize( 
+            text= modText,
+            length='short',
+            format='paragraph',
+            model='command',
+            additional_command='',
+            temperature=0.6,
+            ) 
+        #print('Summary:', response.summary) checking summary
+        return response.summary
     
     else:
         pass
 
     
 
-def start():
+def mainFunc():
     endRec = True
     currStr = ''
     while endRec:
@@ -81,8 +100,9 @@ def start():
     print(currStr)
 
 
+
 if __name__ == "__main__":
-    
-    start()
+    mainFunc()
+
 
 
