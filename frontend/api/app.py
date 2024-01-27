@@ -16,7 +16,6 @@ app = Flask(__name__)
 cors= CORS(app,origins="http://127.0.0.1:3000", resources={r'/api/*':{'orgins':"*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-global FRIEND, IMG ,EVENT_NAME, FRIEND_NAME, SUMMARY, LOCATION, DATE
 
 FRIEND = ""
 EVENT_NAME = ""
@@ -56,6 +55,7 @@ def hello_world():
 @cross_origin()
 def post_summary(user):
     data = request.json
+    global EVENT_NAME, FRIEND_NAME, SUMMARY, LOCATION, DATE
     print(data["data"])
     EVENT_NAME = getEventName(data["data"])
     FRIEND_NAME = getFirstName(data["data"])
@@ -64,6 +64,7 @@ def post_summary(user):
     DATE = getDate(data["data"])
     print("eventname: "+EVENT_NAME,"friend: "+FRIEND_NAME,"summary: " +SUMMARY, "Location: "+LOCATION, "date: "+DATE) 
 
+    print("summary id" ,FRIEND)
     if(FRIEND == None):
         create_new_person()
     else:
@@ -130,8 +131,9 @@ def get_image(user):
         newPerson=True
     else: 
         newPerson=False
-        FRIEND=result
-        print(FRIEND)
+        global FRIEND
+        FRIEND = result
+        print("test" + FRIEND)
     
     # if (not result):
        
@@ -154,7 +156,7 @@ def add_to_firebase(user, friend_id):
         "name":EVENT_NAME,
         "summary":SUMMARY
     }
-    print(friend_id)
+    print("testing id"+friend_id)
     friends_ref = doc_ref.document('user_test').collection('friends').document(friend_id)
     events_collection_ref = friends_ref.collection('events')
     new_event_doc_ref = events_collection_ref.add(data) # Firestore generates a unique ID
