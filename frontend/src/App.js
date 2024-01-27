@@ -4,7 +4,7 @@ import Timeline from "./timeline/timeline";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App min-h-screen w-full  ">
       <Router>
         <Routes>
           <Route path="/" element={<Card />} />

@@ -127,7 +127,7 @@ class VerticalCarousel extends React.Component {
     }
     return (
       <React.Fragment>
-        <Wrapper>
+        <Wrapper >
           {this.getPresentableSlides().map((slide, presentableIndex) => (
             <Slide
               key={slide.key}

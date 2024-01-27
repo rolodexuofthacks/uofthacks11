@@ -1,13 +1,13 @@
-.main{
+/* .main{
     position: fixed;
     display: flex;
-        /* flex-direction: row; */
-    /* justify-content: center; */
+    flex-direction: column; 
+    justify-content: center;
     width: 100vw;
     height: 100vh;
     margin: 0 auto;
     
-}
+} */
 .card{
 
     border-radius: 10px;
@@ -40,9 +40,17 @@
     font-size: 30px;
 }
 
-.rolodex{
-    position: relative;
+/* .rolodexright{
+    position: absolute;
     width:20%;
     height: 50%;
+    left:930px;
 }
 
+.rolodexleft{
+    position: absolute;
+    width:20%;
+    height: 50%;
+    left:80px;
+}
+ */
