@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <Card />
       {/* move timeline to wherever required */}
-      <Timeline /> 
+      {/* <Timeline />  */}
 
     </div>
   );

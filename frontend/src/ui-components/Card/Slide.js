@@ -10,6 +10,7 @@ const SlideContainer = styled.div`
   align-items: center;
   justify-content: center;
   transform-origin: 50% 50%;
+  
 `;
 
 const SlideCard = styled.div`

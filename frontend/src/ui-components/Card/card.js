@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import VerticalCarousel from "./VerticalCarousel";
 import { config } from "react-spring";
 import CardContent from "./CardContent";
+import "./card.css";
 
 
 const slides = [
@@ -100,23 +101,17 @@ export default class Card extends Component {
 
   render() {
     return (
-      <div 
-        style={{
-          position: "fixed",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          width: "100vw",
-          height: "100vh",
-          margin: "0 auto",
-        }}
-      >
+      <div className="main select-none">
+        <img className='rolodex' src='./rolodex/rolodex-left.png'></img>
         <VerticalCarousel
           slides={slides}
           offsetRadius={this.state.offsetRadius}
           showNavigation={this.state.showNavigation}
           animationConfig={this.state.config}
         />
+        <img className='rolodex' src='./rolodex/rolodex-right.png
+        '></img>
+       
       </div>
     );
   }
