@@ -13,7 +13,7 @@ import os
 from openai import OpenAI
 
 app = Flask(__name__)
-CORS(app,origins="http://127.0.0.1:3000")
+cors= CORS(app,origins="http://127.0.0.1:3000", resources={r'/api/*':{'orgins':"*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 global FRIEND, IMG ,EVENT_NAME, FRIEND_NAME, SUMMARY, LOCATION, DATE
@@ -51,8 +51,9 @@ def hello_world():
     return jsonify("Hello World!")
 
 ##get user recording
-@app.route('/api/<user>/voice_recording', methods=['POST','OPTIONS'])
 
+@app.route('/api/<user>/voice_recording', methods=['POST'])
+@cross_origin()
 def post_summary(user):
     data = request.json
     print(data["data"])
@@ -62,6 +63,11 @@ def post_summary(user):
     LOCATION =getEventLocation(data["data"])
     DATE = getDate(data["data"])
     print("eventname: "+EVENT_NAME,"friend: "+FRIEND_NAME,"summary: " +SUMMARY, "Location: "+LOCATION, "date: "+DATE) 
+
+    if(FRIEND == None):
+        create_new_person()
+    else:
+        add_to_firebase("user_test",FRIEND)
     return jsonify({'message': 'Voice recoding submitted succesfully'})
 
 
@@ -92,9 +98,22 @@ def get_events(user, friend_id):
 
 
 
+# def test():
+#     # text = "Hey there! I wanted to share my experience at an art event on the 8th of October 2022 called "Artistry Expo." It was an art exhibition at the Metropolitan Gallery, starting at 2:00 PM. My name is Olivia, and if you were into artistic expressions, it was worth checking out. The expo brought together artists and art enthusiasts discussing the latest trends in contemporary art and provided excellent opportunities for exploring diverse artistic expressions. I was particularly excited about the interactive workshops and live art installations. I heard about it through art magazines and thought it could be a great chance to immerse myself in the world of creativity and connect with fellow art enthusiasts. I hope you marked it on your calendar, and perhaps I saw you at Artistry Expo in 2022 on the 8th!"
+#     EVENT_NAME = getEventName(text)
+#     FRIEND_NAME = getFirstName(text)
+#     SUMMARY = summarizeText(text)
+#     LOCATION =getEventLocation(text)
+#     DATE = getDate(text)
+#     print("eventname: "+EVENT_NAME,"friend: "+FRIEND_NAME,"summary: " +SUMMARY, "Location: "+LOCATION, "date: "+DATE) 
 
+#     if(FRIEND == None):
+#         create_new_person()
+#     else:
+#         add_to_firebase("user_test",FRIEND)
+#     return jsonify({'message': 'Voice recoding submitted succesfully'})
 
-@app.route('/api/<user>/image', methods=['POST', "OPTION"])
+@app.route('/api/<user>/image', methods=['POST', "OPTIONS"])
 @cross_origin()
 def get_image(user):
 
@@ -106,12 +125,19 @@ def get_image(user):
     with open('captured_image.jpeg', 'wb') as f:
             f.write(image)
     result = check_image(image,"user_test")
-    # newPerson==result
-    # # if (not result):
+    print(result)
+    if(result==None):
+        newPerson=True
+    else: 
+        newPerson=False
+        FRIEND=result
+        print(FRIEND)
+    
+    # if (not result):
        
-    # # else:
-    # #     #TO DO
-    # #     print("set name")
+    # else:
+    #     #TO DO
+    #     print("set name")
     print(result)
     return jsonify({'message': 'Image uploaded successfully'})
 
@@ -128,38 +154,39 @@ def add_to_firebase(user, friend_id):
         "name":EVENT_NAME,
         "summary":SUMMARY
     }
-    doc_ref.collection(user+"/friends/"+friend_id).add(data)
-
+    print(friend_id)
+    friends_ref = doc_ref.document('user_test').collection('friends').document(friend_id)
+    events_collection_ref = friends_ref.collection('events')
+    new_event_doc_ref = events_collection_ref.add(data) # Firestore generates a unique ID
+    
 
 
 def check_image(img, user):
     doc = doc_ref.document("user_test").collection("friends").stream()
 
     for friend in doc:
-      test = friend.to_dict()
-      print(test["encoding"])
+        test = friend.to_dict()
+       
+        encoding=  test["encoding"]  # Returns None if the field does not exist
+      
+        new_array = np.array(encoding)
+        print(new_array)
+        new_image = face_recognition.load_image_file("./captured_image.jpeg")
+        new_face_locations = face_recognition.face_locations(new_image)
+        new_face_encodings = face_recognition.face_encodings(new_image, new_face_locations)
+        matches = []
+        for new_face_encoding in new_face_encodings:
+            print(type(new_face_encoding))
+        # Compare the face encodings
+            matches = face_recognition.compare_faces([new_array], new_face_encoding)
 
-    # if doc.exists:
-    #     encoding=  doc.to_dict().get("encoding", None)  # Returns None if the field does not exist
-    # else:
-    #     return 'Document not found'
-    # new_array = np.array(encoding)
-    # print(new_array)
-    # new_image = face_recognition.load_image_file("./captured_image.jpeg")
-    # new_face_locations = face_recognition.face_locations(new_image)
-    # new_face_encodings = face_recognition.face_encodings(new_image, new_face_locations)
-    # matches = []
-    # for new_face_encoding in new_face_encodings:
-    #     print(type(new_face_encoding))
-    # # Compare the face encodings
-    #     matches = face_recognition.compare_faces([new_array], new_face_encoding)
+        if True in matches:
+            return f'{friend.id}'
+        else:
+            print("No Match Found")
+        # get model from firebase and compare to all of them
 
-    # if True in matches:
-    #     return True
-    # else:
-    #     print("No Match Found")
-    # get model from firebase and compare to all of them
-    return False
+    return None
 
 
 
@@ -174,32 +201,15 @@ def create_new_person():
     new_face_encodings = face_recognition.face_encodings(new_image, new_face_locations)
     face_encoding = new_face_encodings[0]
     # print( type(face_encoding))
-    print(face_encoding)
-    list_array = face_encoding.tolist()
-    print(list_array)
-    # doc_ref.document("user_test/friends/x2RDe2RmNlNzqsNnExuX").update({"encoding": list_array})
-    # jsonface_encoding = json.dumps({"encoding":list_array}
-                                   
-    # print(jsonface_encoding)
-    # text  = {"name": "Aditya", "encoding": face_encoding}
     # print(face_encoding)
-    # data  = json.dumps(text)
-#     ref.push().set({
-# 	"Aditya":
-# 	{
-# 		"Friends":{
-#            "Jun":{
-#                "Events":{
-#                    "Hackathon":{
-#                        "Summary":"summary"
-#                    }
-#                }
-#            }
-#         } 
-# 	}
-# })
+    list_array = face_encoding.tolist()
+    # print(list_array)
+    add_result,new_doc_ref = doc_ref.document("user_test").collection("friends").add({"name":FRIEND_NAME,"encoding": list_array})
+    print(new_doc_ref.id)
+    add_to_firebase("user_test",new_doc_ref.id)
+                                   
     
-create_new_person()
+    
 
 #voice recoding code
 def summarizeText(totalText):

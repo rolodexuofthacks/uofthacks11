@@ -33,7 +33,7 @@ function App() {
 
   // Check transcript for keywords
   useEffect(() => {
-    if (transcript.includes("tim start")) {
+    if (transcript.includes("tim begin")) {
       // Perform actions when your start keyword is detected
 
       resetTranscript();
