@@ -1,6 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./ui-components/home";
+import Card from "./ui-components/Card/card";
+import Timeline from "./timeline/timeline";
+import "./App.css";
+import React, { useState, useEffect, useRef } from "react";
+import Webcam from "react-webcam";
+import { Link } from "react-router-dom";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 function App() {
   //example to fetch
   const [text, setText] = useState("");
@@ -98,21 +106,15 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App min-h-screen w-full  ">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/rolodex" element={<Card />} />
+          <Route path="/record" element={<Home />} />
+          <Route path="/storyline" element={<Timeline />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
