@@ -109,8 +109,8 @@ export default class Card extends Component {
           showNavigation={this.state.showNavigation}
           animationConfig={this.state.config}
         />
-        <img className='rolodex' src='./rolodex/rolodex-right.png
-        '></img>
+        {/* <img className='rolodex' src='./rolodex/rolodex-right.png
+        '></img> */}
        
       </div>
     );

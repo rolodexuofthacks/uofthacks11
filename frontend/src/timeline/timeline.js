@@ -45,9 +45,9 @@ export default function Timeline() {
         </VerticalTimelineElement>
         <VerticalTimelineElement
           className="vertical-timeline-element--work"
-          contentStyle={{ background: "#E1EBFF" }}
+          contentStyle={{ background: "#EFA1C8" }}
           date="December 15th, 2023"
-          iconStyle={{ background: "#E1EBFF", color: "#000" }}
+          iconStyle={{ background: "#EFA1C8", color: "#000" }}
           icon={<FontAwesomeIcon icon={faCamera} />}
         >
           <h3 className="vertical-timeline-element-title">Christmas Market</h3>
@@ -119,9 +119,9 @@ export default function Timeline() {
         </VerticalTimelineElement>
         <VerticalTimelineElement
           className="vertical-timeline-element--work"
-          contentStyle={{ background: "#EFA1C8" }}
+          contentStyle={{ background: "#E1EBFF" }}
           date="July 1st, 2023"
-          iconStyle={{ background: "#EFA1C8", color: "#000" }}
+          iconStyle={{ background: "#E1EBFF", color: "#000" }}
           icon={<FontAwesomeIcon icon={faGift} />}
         >
           <h3 className="vertical-timeline-element-title">
