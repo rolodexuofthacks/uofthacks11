@@ -103,17 +103,29 @@ function App() {
 
   return (
     <div className="App">
-      <Webcam
-        audio={false}
-        height={720}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        width={1280}
-        videoConstraints={videoConstraints}
-      />
-      <button onClick={capture}>Capture photo</button>
-      <button onClick={startListening}>Start</button>
-      <button onClick={stopListeningAndSendData}>Stop</button>
+      <div className="webcam-container">
+        <Webcam
+          audio={false}
+          height={720}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          width={1280}
+          videoConstraints={videoConstraints}
+          className="webcam"
+        />
+      </div>
+
+      <div className="btn-container">
+        <button className="webcam-btn btn-1" onClick={capture}>
+          Capture photo
+        </button>
+        <button className="webcam-btn btn-2" onClick={startListening}>
+          Start
+        </button>
+        <button className="webcam-btn btn-3" onClick={stopListeningAndSendData}>
+          Stop
+        </button>
+      </div>
       <p>{transcript}</p>
       {/* {/* <div>{imgSrc && <img src={imgSrc} />}</div> */}
     </div>
