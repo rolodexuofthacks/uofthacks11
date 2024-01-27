@@ -29,7 +29,7 @@ new_face_encodings = face_recognition.face_encodings(new_image, new_face_locatio
 
 for new_face_encoding in new_face_encodings:
     # Compare the face encodings
-    matches = face_recognition.compare_faces([saved_face_data["encoding"]], new_face_encoding)
+    matches = face_recognition.compare_faces([face_encoding], new_face_encoding)
 
     if True in matches:
         first_match_index = matches.index(True)

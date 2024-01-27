@@ -13,9 +13,11 @@ import numpy as np
 app = Flask(__name__)
 CORS(app,origins="http://localhost:3000")
 
+global FRIEND
+
+FRIEND = ""
 
 #cohere api key
-co = cohere.Client('g2R85UU11pV9sRiFmR8RPJjecUWkQMDiUvfu4RK6')
 
 #connect to database
 cred = credentials.Certificate("./uofthackathon-firebase-adminsdk-3sfak-8760298d57.json")
@@ -37,6 +39,8 @@ def hello_world():
 def post_summary():
     return jsonify("")
 
+
+#get list of friends
 @app.route("/api/<user>/friends",  methods=['GET'])
 def get_freinds(user):
    # print(doc_ref.document("user_test").stream())
@@ -52,6 +56,17 @@ def get_freinds(user):
     return jsonify(result)
     
 
+#get list of events
+@app.route("/api/<user>/<friend_id>/events", methods=['GET'])
+def get_events(user, friend_id):
+    events = doc_ref.document("user_test/friends/"+friend_id).collection("events").stream()
+    result = []
+    for event in events:
+        result.append((f'ID: {event.id}, Data: {event.to_dict()}'))
+    return jsonify(result)
+
+
+
 
 
 @app.route('/api/<user>/image', methods=['POST'])
@@ -60,17 +75,46 @@ def get_image(user):
     # print(data)
     image_data = data['image'].split(';base64,')[1]  # Remove the base64 prefix
     image = base64.b64decode(image_data) #convert to image
-    result = check_image(image)
-    if(result == "none"):
-        create_new_person()
- 
     with open('captured_image.jpeg', 'wb') as f:
-        f.write(image)
+            f.write(image)
+    result = check_image(image)
+    
+    if (not result):
+        create_new_person()
+    else:
+        #TO DO
+        print("set name")
+    print(result)
     return jsonify({'message': 'Image uploaded successfully'})
 
+   
+    # if(result == "none"):
+    #     return
+ 
+   
 
 def check_image(img):
-    #get model from firebase and compare to all of them
+    doc = doc_ref.document("user_test/friends/WwH0wPiYUPKaLSJPhOKU").get()
+    if doc.exists:
+        encoding=  doc.to_dict().get("encoding", None)  # Returns None if the field does not exist
+    else:
+        return 'Document not found'
+    new_array = np.array(encoding)
+    print(new_array)
+    new_image = face_recognition.load_image_file("./captured_image.jpeg")
+    new_face_locations = face_recognition.face_locations(new_image)
+    new_face_encodings = face_recognition.face_encodings(new_image, new_face_locations)
+ 
+    for new_face_encoding in new_face_encodings:
+        print(type(new_face_encoding))
+    # Compare the face encodings
+        matches = face_recognition.compare_faces([new_array], new_face_encoding)
+
+    if True in matches:
+        return True
+    else:
+        print("No Match Found")
+    # get model from firebase and compare to all of them
     return False
 
 
@@ -79,14 +123,18 @@ def Assign_a_person():
     return
 
 # #create and store the new model for the person
-def create_new_person(image):
-    new_image = face_recognition.load_image_file(image)
+def create_new_person():
+    new_image = face_recognition.load_image_file("./captured_image.jpeg")
     new_face_locations = face_recognition.face_locations(new_image)
     new_face_encodings = face_recognition.face_encodings(new_image, new_face_locations)
     face_encoding = new_face_encodings[0]
     # print( type(face_encoding))
+    print(face_encoding)
     list_array = face_encoding.tolist()
-    jsonface_encoding = json.dumps({"encoding":list_array})
+    print(list_array)
+    # doc_ref.document("user_test/friends/WwH0wPiYUPKaLSJPhOKU").update({"encoding": list_array})
+    # jsonface_encoding = json.dumps({"encoding":list_array}
+                                   
     # print(jsonface_encoding)
     # text  = {"name": "Aditya", "encoding": face_encoding}
     # print(face_encoding)
@@ -109,35 +157,6 @@ def create_new_person(image):
 # create_new_person()
 
 
-#testing out cohere ai the inform
-
-# text=(
-#   "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. "
-#   "It may be made from milk or cream and is flavoured with a sweetener, "
-#   "either sugar or an alternative, and a spice, such as cocoa or vanilla, "
-#   "or with fruit such as strawberries or peaches. "
-#   "It can also be made by whisking a flavored cream base and liquid nitrogen together. "
-#   "Food coloring is sometimes added, in addition to stabilizers. "
-#   "The mixture is cooled below the freezing point of water and stirred to incorporate air spaces "
-#   "and to prevent detectable ice crystals from forming. The result is a smooth, "
-#   "semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). "
-#   "It becomes more malleable as its temperature increases.\n\n"
-#   "The meaning of the name \"ice cream\" varies from one country to another. "
-#   "In some countries, such as the United States, \"ice cream\" applies only to a specific variety, "
-#   "and most governments regulate the commercial use of the various terms according to the "
-#   "relative quantities of the main ingredients, notably the amount of cream. "
-#   "Products that do not meet the criteria to be called ice cream are sometimes labelled "
-#   "\"frozen dairy dessert\" instead. In other countries, such as Italy and Argentina, "
-#   "one word is used fo\r all variants. Analogues made from dairy alternatives, "
-#   "such as goat's or sheep's milk, or milk substitutes "
-#   "(e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are "
-#   "lactose intolerant, allergic to dairy protein or vegan."
-# )
-
-# response = co.summarize(
-#   text=text,
-# )
-# print(response)
 
 # with open("book.json", "r") as f:
 # 	file_contents = json.load(f)
