@@ -6,7 +6,7 @@ const CardContent = ({ name, image }) => {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate("/storyline");
+    navigate("/storyline", { state: { name, image } });
   }
 
   return (

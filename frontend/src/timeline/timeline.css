@@ -1,7 +1,7 @@
 
 /* Timeline Container */
 .timeline {
-  background: linear-gradient(159deg, #03293F 12.28%, rgba(73, 160, 223, 0.67) 91.27%);
+  background: linear-gradient(159deg, #47A3BB 12.28%, #FFF57E 91.27%);
 }
 
 .custom-date{
@@ -12,4 +12,12 @@
 
 .title{
   font-weight:bold; 
+}
+
+.infoCard{
+  background-color: #fff;
+}
+
+.container{
+  height: 100vh;
 }
