@@ -1,0 +1,30 @@
+.card{
+    border-radius: 10px;
+    background: linear-gradient(180deg, #E283C1 0%, rgba(94, 120, 213, 0.73) 99.99%, rgba(217, 217, 217, 0.00) 100%);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: inline-flex;
+    justify-content: space-around;
+    
+}
+
+.card img{
+    width:40%; 
+}
+
+.btn{
+    background-color: #fff;
+    border-radius: 10px;
+    padding:10px 30px 10px 30px; 
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.description{
+    margin-top: 100px;
+    margin-right: 0px;
+    padding-right: 100px;
+}
+
+.description h2{
+    font-size: 30px;
+}
