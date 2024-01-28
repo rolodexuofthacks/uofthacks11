@@ -90,6 +90,7 @@ const Timeline = () => {
       <div className="profile w-1/3 ">
         <Profile name={name} image={image} />
       </div>
+      {/*comment*/}
       <div className="timeline w-2/3 max-h-full overflow-auto">
         <VerticalTimeline>
           {timelineData.map((event, index) => (
