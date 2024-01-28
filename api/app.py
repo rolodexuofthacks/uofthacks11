@@ -253,7 +253,7 @@ def create_new_person():
     add_to_firebase("user_test",new_doc_ref.id)
                                    
     
-
+# create_new_person()
 
 #voice recoding code
 def summarizeText(totalText):
