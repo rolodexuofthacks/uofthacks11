@@ -17,11 +17,15 @@ const Profile = ({ image, name, birthday, tag, additionalInfo }) => {
 
   const [searchText, setSearchText] = useState("");
 
+  const handleSearchSubmit = () => {
+    alert("Searching...")
+  }
+
   return (
     <div className="profile mt-10 flex justify-center items-center flex-col">
       <div className="text-black  flex flex-row items-center justify-center mb-4 bg-white p-2 rounded border border-black p-1">
-        <input type="text" placeholder="Search..."/>
-        <button className="active:bg-gray-200 p-1 rounded"> Go </button>
+        <input defaultValue={searchText} onChange={e => setSearchText(e.target.value)} type="text" placeholder="Search..."/>
+        <button className="active:bg-gray-200 p-1 rounded" onButtonClick={handleSearchSubmit}> Go </button>
       </div>
       <img src={image} alt={name} className="profile-image" />
       <div className="mt-8">
