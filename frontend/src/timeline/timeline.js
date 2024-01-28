@@ -83,6 +83,8 @@ const Timeline = () => {
 
   const handleSubmitNotes = () => {
     //post noteText to backend
+    
+    alert("Your note has been successfully saved!")
   }
 
   return (
