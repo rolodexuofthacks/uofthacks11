@@ -2,9 +2,10 @@
 .App {
   text-align: center;
   height: 100vh;
+  background: #fff8b0;
 }
 /* 
-
+background: linear-gradient(90deg, #eebb02 -5.98%, #ef98e6 99.54%);
 .webcam-container {
   display: flex;
   justify-content: center;
