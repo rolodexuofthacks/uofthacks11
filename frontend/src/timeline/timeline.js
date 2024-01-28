@@ -142,7 +142,7 @@ const Timeline = () => {
                     <FontAwesomeIcon icon={faCalendar} />
                   </div>
                   <h3 className="vertical-timeline-element-title">
-                    {event.title}
+                    {event.name}
                   </h3>
                 </div>
                 <div className="flex text-black">
