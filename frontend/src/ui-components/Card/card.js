@@ -102,9 +102,13 @@ export default class Card extends Component {
         </button>
 
         <div className="flex flex-row justify-center space-x-96 min-h-screen items-center">
-          <img className="rolodexleft" src="/rolodex/rolodex-left.png"></img>
+          <img className="rolodexleft" src="./rolodex/rolodex-left1.png"></img>
 
-          <img className="rolodexright" src="/rolodex/rolodex-right.png"></img>
+          <img
+            className="rolodexright"
+            src="./rolodex/rolodex-right1.png"
+          ></img>
+
         </div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
           {/* VerticalCarousel */}
