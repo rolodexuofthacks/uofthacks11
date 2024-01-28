@@ -60,7 +60,11 @@ def hello_world():
 @cross_origin()
 def post_summary(user):
     data = request.json
-    global EVENT_NAME, FRIEND_NAME, SUMMARY, LOCATION, DATE
+    global EVENT_NAME
+    global FRIEND_NAME
+    global SUMMARY
+    global LOCATION
+    global DATE
     print(data["data"])
     EVENT_NAME = getEventName(data["data"])
     FRIEND_NAME = getFirstName(data["data"])
@@ -70,7 +74,7 @@ def post_summary(user):
     print("eventname: "+EVENT_NAME,"friend: "+FRIEND_NAME,"summary: " +SUMMARY, "Location: "+LOCATION, "date: "+DATE) 
 
     print("summary id" ,FRIEND)
-    if(FRIEND == None):
+    if(FRIEND == None or FRIEND == ""):
         create_new_person()
     else:
         add_to_firebase("user_test",FRIEND)
@@ -150,7 +154,6 @@ def get_events(user, friend_id):
 @app.route('/api/<user>/image', methods=['POST', "OPTIONS"])
 @cross_origin()
 def get_image(user):
-
     # data = json.loads(request.data)
     data = request.json
     # print(data)
@@ -162,11 +165,13 @@ def get_image(user):
     print(result)
     if(result==None):
         newPerson=True
+        print("create new person")
     else: 
         newPerson=False
         global FRIEND
         FRIEND = result
-        print("test" + FRIEND)
+        print("person exist! their id: "+ FRIEND)
+     
     
     # if (not result):
        
@@ -182,7 +187,10 @@ def get_image(user):
  
 
 def add_to_firebase(user, friend_id):
-    
+    global LOCATION
+    global DATE
+    global EVENT_NAME
+    global SUMMARY
     data = {
         'location': LOCATION,
         'date': DATE,
@@ -201,8 +209,9 @@ def check_image(img, user):
 
     for friend in doc:
         test = friend.to_dict()
-       
-        encoding=  test["encoding"]  # Returns None if the field does not exist
+        if("encoding" not in test):
+            continue
+        encoding =  test["encoding"]  # Returns None if the field does not exist
       
         new_array = np.array(encoding)
         print(new_array)
@@ -234,6 +243,8 @@ def create_new_person():
     new_image = face_recognition.load_image_file("./captured_image.jpeg")
     new_face_locations = face_recognition.face_locations(new_image)
     new_face_encodings = face_recognition.face_encodings(new_image, new_face_locations)
+    if(len(new_face_encodings)):
+        return "no face found"  
     face_encoding = new_face_encodings[0]
     # print( type(face_encoding))
     # print(face_encoding)
