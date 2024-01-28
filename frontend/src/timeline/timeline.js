@@ -113,9 +113,16 @@ const Timeline = () => {
                   <p>{event.summary}</p>
                 </div>
 
-                <div className="text-black">
+                <div className="text-black  flex flex-col items-center justify-center ">
                   <h3 className="title mt-3 font-bold underline">NOTES: </h3>
-                  <p>{event.notes}</p>
+                  <textarea
+                    type="text"
+                    rows={5}
+                    className="w-full resize-none border border-black p-1 rounded"
+                  />
+                  <button className=" border-black p-1 rounded">
+                    Save Notes
+                  </button>
                 </div>
               </div>
 
