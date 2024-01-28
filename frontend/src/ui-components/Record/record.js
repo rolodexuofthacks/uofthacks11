@@ -66,9 +66,14 @@ function Record() {
 
   const capture = React.useCallback(() => {
     console.log("taking image");
-    const imageSrc = webcamRef.current.getScreenshot();
-    uploadImage(imageSrc);
-    setImgSrc(imageSrc);
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setImgSrc(imageSrc);
+      uploadImage(imageSrc);
+      setImgSrc(imageSrc);
+    } else {
+      console.log("Webcam not ready");
+    }
   }, [webcamRef, setImgSrc]);
 
   const videoConstraints = {
@@ -102,7 +107,6 @@ function Record() {
           screenshotFormat="image/jpeg"
           width={1280}
           videoConstraints={videoConstraints}
-          className="webcam"
         />
       </div>
 
