@@ -1,5 +1,5 @@
 .homemain{
-    background:linear-gradient(90deg, #47A3BB -5.98%, #EEF023 99.54%);
+    background:linear-gradient(90deg, #eebb02 -5.98%, #ef98e6 99.54%);
 }
 
 .title1{
@@ -54,3 +54,19 @@
     from, to { border-color: transparent }
     50% { border-color: #fff; }
   }
+
+  .timScale {
+    animation: timZoomInOut 3s ease infinite
+  }
+
+  @keyframes timZoomInOut {
+    0% {
+        transform: scale(1,1);
+    }
+    50%{
+        transform: scale(1.1,1.1);
+    }
+    100%{
+      transform: scale(1,1);
+    }
+}
