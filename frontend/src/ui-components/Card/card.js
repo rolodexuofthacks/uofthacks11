@@ -85,13 +85,15 @@ export default class Card extends Component {
           image={
             card.Data.img || "/avatar/avatar" + String((index % 9) + 1) + ".png"
           }
+          id={card.ID}
         />
       ),
     }));
+
     if (this.state.Cards.length === 0) {
       return <div>Loading...</div>;
     }
-    console.log("Cards:", this.state.Cards[0]["Data"]["name"]);
+    // console.log("Cards:", this.state.Cards[0].ID);
     return (
       <div className="main select-none w-full">
         {/* Search bar */}

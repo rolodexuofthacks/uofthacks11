@@ -120,11 +120,14 @@ def get_freinds(user):
 
 #get list of events
 @app.route("/api/<user>/<friend_id>/events", methods=['GET'])
+@cross_origin()
 def get_events(user, friend_id):
     events = doc_ref.document("user_test/friends/"+friend_id).collection("events").stream()
     result = []
     for event in events:
-        result.append((f'ID: {event.id}, Data: {event.to_dict()}'))
+        event_data = event.to_dict()
+        event_data['ID'] = event.id  # Add the ID to the event data
+        result.append(event_data)
     return jsonify(result)
 
 
@@ -250,7 +253,7 @@ def create_new_person():
     add_to_firebase("user_test",new_doc_ref.id)
                                    
     
-create_new_person()
+
 
 #voice recoding code
 def summarizeText(totalText):
