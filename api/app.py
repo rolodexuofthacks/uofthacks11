@@ -1,4 +1,5 @@
 import base64
+import random
 from flask import Flask, jsonify, request
 import cv2 
 import json
@@ -10,6 +11,7 @@ from firebase_admin import credentials,firestore
 import face_recognition
 import numpy as np
 import os
+from firebase_admin import storage
 from openai import OpenAI
 
 app = Flask(__name__)
@@ -24,8 +26,9 @@ LOCATION = ""
 DATE =""
 #
 SUMMARY=""
+
 date=""
-IMG = ""
+IMG_URL = ""
 
 newPerson=True
 
@@ -37,8 +40,10 @@ client = OpenAI(api_key=str(os.getenv('GPT_API_KEY')))
 #connect to database
 cred = credentials.Certificate("./uofthackathon-firebase-adminsdk-3sfak-8760298d57.json")
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://uofthackathon-default-rtdb.firebaseio.com/' 
+    'databaseURL': 'https://uofthackathon-default-rtdb.firebaseio.com/' , 'storageBucket': 'uofthackathon.appspot.com'
 })
+
+
 
 db = firestore.client()
 doc_ref = db.collection('Test')
@@ -70,6 +75,24 @@ def post_summary(user):
     else:
         add_to_firebase("user_test",FRIEND)
     return jsonify({'message': 'Voice recoding submitted succesfully'})
+
+
+def upload_image(file_path, destination_blob_name):
+    bucket = storage.bucket()
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_filename(file_path)
+
+    # Make the blob publicly viewable.
+    blob.make_public()
+
+    return blob.public_url
+
+def save_image_url_to_firestore(url, document_id):
+    doc_ref = db.collection('images').document(document_id)
+    doc_ref.set({
+        'url': url
+    })
 
 
 #get list of friends
@@ -213,12 +236,21 @@ def create_new_person():
     # print(face_encoding)
     list_array = face_encoding.tolist()
     # print(list_array)
-    add_result,new_doc_ref = doc_ref.document("user_test").collection("friends").add({"name":FRIEND_NAME,"encoding": list_array})
+    file_path = './captured_image.jpeg' 
+    
+ # Path to your image file
+    destination_blob_name = 'images/images'+ str(random.randint(1000000000, 9999999999)) # Path in the storage bucket
+
+# Upload the image
+    image_url = upload_image(file_path, destination_blob_name)
+
+# Save the image URL to Firestore
+    add_result,new_doc_ref = doc_ref.document("user_test").collection("friends").add({"name":FRIEND_NAME,"encoding": list_array, "img":image_url})
     print(new_doc_ref.id)
     add_to_firebase("user_test",new_doc_ref.id)
                                    
     
-    
+create_new_person()
 
 #voice recoding code
 def summarizeText(totalText):

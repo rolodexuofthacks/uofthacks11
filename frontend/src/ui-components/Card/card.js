@@ -80,7 +80,12 @@ export default class Card extends Component {
     const slides = this.state.Cards.map((card, index) => ({
       key: card.ID || index, // Using ID as key, fallback to index
       content: (
-        <CardContent name={card.Data.name} image={card.Data.image || ""} />
+        <CardContent
+          name={card.Data.name}
+          image={
+            card.Data.img || "/avatar/avatar" + String((index % 9) + 1) + ".png"
+          }
+        />
       ),
     }));
     if (this.state.Cards.length === 0) {
