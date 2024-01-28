@@ -27,7 +27,7 @@ const Timeline = () => {
   const { state } = location;
   const [timelineData, setTimelineData] = useState([]);
   const { name, image, id } = state || {};
-  const [noteText, setNoteText] = useState('')
+  const [noteText, setNoteText] = useState("");
 
   console.log(id);
   useEffect(() => {
@@ -83,10 +83,10 @@ const Timeline = () => {
 
   const handleSubmitNotes = () => {
     //post noteText to backend
-  }
+  };
 
   return (
-    <div className="container w-full flex">
+    <div className="timeline-container w-full flex">
       <div className="profile w-1/3 ">
         <Profile name={name} image={image} />
       </div>
@@ -121,18 +121,16 @@ const Timeline = () => {
 
                 <div className="text-black  flex flex-col items-center justify-center ">
                   <h3 className="title mt-3 font-bold underline">NOTES: </h3>
-                  
-                    <textarea
-                      type="text"
-                      defaultValue={noteText}
-                      onChange={e => setNoteText(e.target.value)} 
-                      rows={5}
-                      className="w-full resize-none border border-black p-1 rounded"
-                    />
-                  
-                  <button onClick={handleSubmitNotes}>
-                    Save Notes
-                  </button>
+
+                  <textarea
+                    type="text"
+                    defaultValue={noteText}
+                    onChange={(e) => setNoteText(e.target.value)}
+                    rows={5}
+                    className="w-full resize-none border border-black p-1 rounded"
+                  />
+
+                  <button onClick={handleSubmitNotes}>Save Notes</button>
                 </div>
               </div>
 
