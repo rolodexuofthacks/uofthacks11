@@ -1,10 +1,8 @@
 /* Timeline Container linear-gradient(159deg, #47A3BB 12.28%, #FFF57E 91.27%)*/
-/*.timeline {
-  background: linear-gradient(180deg, #fdd661 -5.98%, #adb4f5 99.54%);
-}*/
 .timeline {
-  background: #adc1f5;
+  background: linear-gradient(159deg, #47A3BB 12.28%, #FFF57E 91.27%); 
 }
+
 .custom-date {
   font-weight: bold;
   color: #fff;
