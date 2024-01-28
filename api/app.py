@@ -74,12 +74,19 @@ def post_summary(user):
 
 #get list of friends
 @app.route("/api/<user>/friends",  methods=['GET'])
+@cross_origin()
 def get_freinds(user):
    # print(doc_ref.document("user_test").stream())
     friends = doc_ref.document("user_test").collection('friends').stream()
-    result=[]
+    result = []
+
     for friend in friends:
-        result.append((f'ID: {friend.id}, Data: {friend.to_dict()}'))
+        friend_data = friend.to_dict()  # Convert the document to a dictionary
+        friend_entry = {
+            'ID': friend.id,
+            'Data': friend_data
+    }
+        result.append(friend_entry)
 
     # reference =     (f'/{user}/Friends')
     # print(reference)
