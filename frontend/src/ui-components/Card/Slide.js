@@ -10,16 +10,20 @@ const SlideContainer = styled.div`
   align-items: center;
   justify-content: center;
   transform-origin: 50% 50%;
-  
 `;
 
 const SlideCard = styled.div`
   position: relative;
   width: 600px;
   height: 300px;
-   background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background: #fcfcfc;
   // font-size: 35px;
   display: flex;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #868686;
+
   align-items: center;
   justify-content: center;
   transform-origin: 50% 50%;
@@ -34,7 +38,7 @@ function Slide({
   moveSlide,
   delta,
   down,
-  up
+  up,
 }) {
   const offsetFromMiddle = index - offsetRadius;
   const totalPresentables = 2 * offsetRadius + 1;
@@ -77,7 +81,7 @@ function Slide({
         <SlideContainer
           style={{
             ...style,
-            zIndex: Math.abs(Math.abs(offsetFromMiddle) - 10)
+            zIndex: Math.abs(Math.abs(offsetFromMiddle) - 10),
           }}
         >
           <SlideCard onClick={() => moveSlide(offsetFromMiddle)}>
@@ -93,47 +97,47 @@ const styles = {
   0: {
     transform: "translateX(0%) translateY(-41.7%) scale(0.8)",
     top: "22%",
-    opacity: 0
+    opacity: 0,
   },
   1: {
     transform: "translateX(0%) translateY(-80%) scale(0.85)",
     top: "42%",
-    opacity: 0.85
+    opacity: 0.85,
   },
   2: {
     transform: "translateX(0%) translateY(-70%) scale(0.9)",
     top: "44%",
-    opacity: 0.9
+    opacity: 0.9,
   },
   3: {
     transform: "translateX(0%) translateY(-60%) scale(0.95)",
     top: "47%",
-    opacity: 0.95
+    opacity: 0.95,
   },
   4: {
     transform: "translateX(0%) translateY(-50%) scale(1)",
     top: "50%",
-    opacity: 1
+    opacity: 1,
   },
   5: {
     transform: "translateX(0%) translateY(-40%) scale(0.95)",
     top: "51%",
-    opacity: 0.95
+    opacity: 0.95,
   },
   6: {
     transform: "translateX(0%) translateY(-30%) scale(0.9)",
     top: "52%",
-    opacity: 0.9
+    opacity: 0.9,
   },
   7: {
     transform: "translateX(0%) translateY(-20%) scale(0.85)",
     top: "52.5%",
-    opacity: 0.85
+    opacity: 0.85,
   },
   8: {
     transform: "translateX(0%) translateY(-60%) scale(0.8)",
     top: "74%",
-    opacity: 0
-  }
+    opacity: 0,
+  },
 };
 export default withGesture()(Slide);

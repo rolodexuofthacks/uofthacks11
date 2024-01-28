@@ -97,7 +97,7 @@ export default class Card extends Component {
     return (
       <div className="main select-none w-full">
         {/* Search bar */}
-        <input
+        {/* <input
           className="searchBar "
           type="text"
           placeholder="Search for a friend..."
@@ -106,7 +106,7 @@ export default class Card extends Component {
         />
         <button className="searchbtn" onClick={this.handleSearch}>
           <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </button>
+        </button> */}
 
         <div className="flex flex-row justify-center space-x-96 min-h-screen items-center">
           <img className="rolodexleft" src="/rolodex/rolodex-left1.png"></img>
