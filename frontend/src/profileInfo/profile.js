@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCakeCandles,
@@ -14,8 +14,15 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 const Profile = ({ image, name, birthday, tag, additionalInfo }) => {
+
+  const [searchText, setSearchText] = useState("");
+
   return (
     <div className="profile mt-10 flex justify-center items-center flex-col">
+      <div className="text-black  flex flex-row items-center justify-center mb-4 bg-white p-2 rounded border border-black p-1">
+        <input type="text" placeholder="Search..."/>
+        <button className="active:bg-gray-200 p-1 rounded"> Go </button>
+      </div>
       <img src={image} alt={name} className="profile-image" />
       <div className="mt-8">
         <p className="font-black text-4xl profile-text">{name}</p>

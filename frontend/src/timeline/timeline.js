@@ -89,6 +89,7 @@ const Timeline = () => {
 
   return (
     <div className="timeline-container w-full flex">
+      
       <div className="profile w-1/3 ">
         <Profile name={name} image={image} />
       </div>
