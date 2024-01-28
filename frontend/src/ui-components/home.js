@@ -21,26 +21,30 @@ const Home = () => {
       <h1 className=" title1 font-serif"> Welcome to RoloTim.ai </h1>
       <h1 className=" title2 font-serif">Your digital memory guardian </h1>
 
-      <div className="flex items-center">
+      <div className="home-btn-container">
+
+        <button className="home-btn">
         <Link
           to="/rolodex"
-          className="box m-4 p-4 bg-#47A3BB-700 text-white rounded"
+          
         >
           <div className="rolodex">
-            <h2 className="text-2xl font-normal hover:font-bold">
+            <p >
               Go to Rolodex
-            </h2>
+            </p>
           </div>
         </Link>
-        <button>
+        
+        </button>
+        <button className="home-btn ">
           <Link
             to="/record"
-            className="box m-4 p-4 bg-#FECC1B-700 text-white rounded"
+           
           >
             <div className="record">
-              <h2 className="text-2xl font-normal hover:font-bold">
+              <p>
                 Go to Record
-              </h2>
+              </p>
             </div>
           </Link>
         </button>
